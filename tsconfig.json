@@ -1,0 +1,31 @@
+{
+    // 编译器选项，配置 TypeScript 如何编译代码
+    "compilerOptions": {
+        // 编译目标 JavaScript 版本 (ES2020 支持 BigInt、可选链等现代语法)
+        "target": "ES2020",
+        // 生成的模块系统 (ESNext 表示使用最新的 ES Modules 语法)
+        "module": "ESNext",
+        // 是否生成 .d.ts 类型声明文件 (发布库时需要)
+        "declaration": true,
+        // 编译输出目录 (所有生成的文件会放在这里)
+        "outDir": "dist",
+        // 启用所有严格类型检查 (推荐开启以保证代码质量)
+        "strict": true,
+        // 改善 CommonJS 和 ES Modules 的兼容性
+        "esModuleInterop": true,
+        // 模块解析策略 (使用 Node.js 的模块查找规则)
+        "moduleResolution": "node",
+        // 生成 sourcemap 文件 (方便调试)
+        "sourceMap": true
+    },
+    // 包含哪些文件需要编译 (使用 glob 语法)
+    "include": [
+        "src"
+    ],
+    // 排除哪些文件 (即使匹配 include 也不编译)(使用 glob 语法)
+    "exclude": [
+        "**/*.test.ts", // 排除所有测试文件
+        "**/*.spec.ts", // 排除所有规范测试文件
+        "src/mock" // 排除模拟数据目录
+    ]
+}
