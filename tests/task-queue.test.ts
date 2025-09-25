@@ -41,84 +41,88 @@ const taskDataList: ITaskData<any, any>[] = [
 ]
 
 
-test('TaskPool.create', () => {
+describe('TaskQueue', () => {
+    test('create', () => {
 
-    const taskPool = new TaskQueue()
-    const task = taskPool.create(taskDataList[0])
+        const taskPool = new TaskQueue()
+        const task = taskPool.create(taskDataList[0])
 
-    expect(task.id).toBe(0)
-    expect(task.tag).toBe(taskDataList[0].tag)
-    expect(task.params).toEqual(taskDataList[0].params)
-    expect(task.taskFunction).toEqual(taskDataList[0].taskFunction)
-    expect(taskPool.tasks.length).toBe(1)
-    expect(taskPool.tasks[0]).toEqual(task)
+        expect(task.id).toBe(0)
+        expect(task.tag).toBe(taskDataList[0].tag)
+        expect(task.params).toEqual(taskDataList[0].params)
+        expect(task.taskFunction).toEqual(taskDataList[0].taskFunction)
+        expect(taskPool.tasks.length).toBe(1)
+        expect(taskPool.tasks[0]).toEqual(task)
 
-    taskPool.remove(task)
-    expect(taskPool.tasks.length).toBe(0)
+        taskPool.remove(task)
+        expect(taskPool.tasks.length).toBe(0)
 
-})
+    })
 
-test('TaskPool.add', () => {
+    test('add', () => {
 
-    const taskPool = new TaskQueue()
-    for (const taskData of taskDataList as ITaskData[]) taskPool.add(new Task(taskData))
+        const taskPool = new TaskQueue()
+        for (const taskData of taskDataList as ITaskData[]) taskPool.add(new Task(taskData))
 
-    expect(taskPool.tasks.length).toBe(taskDataList.length)
+        expect(taskPool.tasks.length).toBe(taskDataList.length)
 
-    for (let i = 0; i < taskPool.tasks.length; i++) {
-        const task = taskPool.tasks[i]
-        expect(task.id).toBe(i)
-        expect(task.tag).toBe(taskDataList[i].tag)
-        expect(task.params).toEqual(taskDataList[i].params)
-        expect(task.taskFunction).toEqual(taskDataList[i].taskFunction)
-    }
+        for (let i = 0; i < taskPool.tasks.length; i++) {
+            const task = taskPool.tasks[i]
+            expect(task.id).toBe(i)
+            expect(task.tag).toBe(taskDataList[i].tag)
+            expect(task.params).toEqual(taskDataList[i].params)
+            expect(task.taskFunction).toEqual(taskDataList[i].taskFunction)
+        }
 
-})
+    })
 
-test('TaskPool.pop', () => {
+    test('pop', () => {
 
-    const taskPool = new TaskQueue()
-    for (const taskData of taskDataList as ITaskData[]) taskPool.add(new Task(taskData))
+        const taskPool = new TaskQueue()
+        for (const taskData of taskDataList as ITaskData[]) taskPool.add(new Task(taskData))
 
-    taskPool.pop()
-    expect(taskPool.tasks.length).toBe(taskDataList.length - 1)
+        taskPool.pop()
+        expect(taskPool.tasks.length).toBe(taskDataList.length - 1)
 
-    for (let i = 0; i < taskPool.tasks.length; i++) {
-        const task = taskPool.tasks[i]
-        expect(task.id).toBe(i + 1)
-        expect(task.tag).toBe(taskDataList[i + 1].tag)
-        expect(task.params).toEqual(taskDataList[i + 1].params)
-        expect(task.taskFunction).toEqual(taskDataList[i + 1].taskFunction)
-    }
+        for (let i = 0; i < taskPool.tasks.length; i++) {
+            const task = taskPool.tasks[i]
+            expect(task.id).toBe(i + 1)
+            expect(task.tag).toBe(taskDataList[i + 1].tag)
+            expect(task.params).toEqual(taskDataList[i + 1].params)
+            expect(task.taskFunction).toEqual(taskDataList[i + 1].taskFunction)
+        }
 
-    taskPool.clear()
-    expect(taskPool.pop()).toBeNull()
+        taskPool.clear()
+        expect(taskPool.pop()).toBeNull()
 
-    expect(taskPool.tasks.length).toBe(0)
+        expect(taskPool.tasks.length).toBe(0)
 
-})
+    })
 
-test('TaskPool.remove', () => {
+    test('remove', () => {
 
-    const taskPool = new TaskQueue()
-    for (const taskData of taskDataList as ITaskData[]) taskPool.add(new Task(taskData))
-    expect(taskPool.tasks.length).toBe(taskDataList.length)
+        const taskPool = new TaskQueue()
+        for (const taskData of taskDataList as ITaskData[]) taskPool.add(new Task(taskData))
+        expect(taskPool.tasks.length).toBe(taskDataList.length)
 
-    taskPool.remove(taskPool.tasks[0])
-    expect(taskPool.tasks.length).toBe(taskDataList.length - 1)
-    expect(taskPool.tasks.find(t => t.id === 0)).toBeUndefined()
+        taskPool.remove(taskPool.tasks[0])
+        expect(taskPool.tasks.length).toBe(taskDataList.length - 1)
+        expect(taskPool.tasks.find(t => t.id === 0)).toBeUndefined()
 
-    taskPool.removeById(1)
-    expect(taskPool.tasks.length).toBe(taskDataList.length - 2)
-    expect(taskPool.tasks.find(t => t.id === 1)).toBeUndefined()
+        taskPool.removeById(1)
+        expect(taskPool.tasks.length).toBe(taskDataList.length - 2)
+        expect(taskPool.tasks.find(t => t.id === 1)).toBeUndefined()
 
-    taskPool.removeByTag('concat')
-    expect(taskPool.tasks.length).toBe(taskDataList.length - 3)
-    expect(taskPool.tasks.find(t => t.tag === 'concat')).toBeUndefined()
+        taskPool.removeByTag('concat')
+        expect(taskPool.tasks.length).toBe(taskDataList.length - 3)
+        expect(taskPool.tasks.find(t => t.tag === 'concat')).toBeUndefined()
 
-    taskPool.clear()
-    expect(taskPool.tasks.length).toBe(0)
+        taskPool.clear()
+        expect(taskPool.tasks.length).toBe(0)
 
-})
+    })
+
+});
+
 
 

@@ -1982,6 +1982,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"coroutine-pool@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "coroutine-pool@workspace:."
+  dependencies:
+    "@rollup/plugin-commonjs": "npm:^28.0.6"
+    "@rollup/plugin-json": "npm:^6.1.0"
+    "@rollup/plugin-node-resolve": "npm:^16.0.1"
+    "@types/jest": "npm:^30.0.0"
+    "@types/node": "npm:^24.3.0"
+    create-jest: "npm:^30.1.2"
+    jest: "npm:^30.1.2"
+    rollup: "npm:^4.50.0"
+    rollup-plugin-peer-deps-external: "npm:^2.2.4"
+    rollup-plugin-terser: "npm:^7.0.2"
+    rollup-plugin-typescript2: "npm:^0.36.0"
+    ts-jest: "npm:^29.4.1"
+    ts-node: "npm:^10.9.2"
+    tsx: "npm:^4.20.5"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "create-jest@npm:^30.1.2":
   version: 30.1.2
   resolution: "create-jest@npm:30.1.2"
@@ -3274,28 +3296,6 @@ __metadata:
   checksum: 10c0/cd778ba3fbab0f4d0500b7e87d1f6e1f041507c56fdcd47e8256a3012c98aaee371d4c15e0a76e0386107af2d42e2b7466160a2d80688aaa03e66e49949f42df
   languageName: node
   linkType: hard
-
-"lib-ts@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "lib-ts@workspace:."
-  dependencies:
-    "@rollup/plugin-commonjs": "npm:^28.0.6"
-    "@rollup/plugin-json": "npm:^6.1.0"
-    "@rollup/plugin-node-resolve": "npm:^16.0.1"
-    "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^24.3.0"
-    create-jest: "npm:^30.1.2"
-    jest: "npm:^30.1.2"
-    rollup: "npm:^4.50.0"
-    rollup-plugin-peer-deps-external: "npm:^2.2.4"
-    rollup-plugin-terser: "npm:^7.0.2"
-    rollup-plugin-typescript2: "npm:^0.36.0"
-    ts-jest: "npm:^29.4.1"
-    ts-node: "npm:^10.9.2"
-    tsx: "npm:^4.20.5"
-    typescript: "npm:^5.9.2"
-  languageName: unknown
-  linkType: soft
 
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4

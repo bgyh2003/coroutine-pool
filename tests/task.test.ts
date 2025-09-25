@@ -16,73 +16,77 @@ const taskDataList: ITaskData<any, any>[] = [
     }
 ]
 
+describe('Task', () => {
+    test('success', (done) => {
 
-test('Task.success', (done) => {
+        const task = new Task(taskDataList[0] as any)
 
-    const task = new Task(taskDataList[0] as any)
+        task.onComplete((_task) => {
+            expect(_task).toBe(task)
+            expect(_task.isCompleted).toBe(true)
+            expect(_task.result).toBe(3)
+            expect(_task.error).toBe(null)
+            expect(_task.time).toBeGreaterThanOrEqual(1000)
+            expect(_task.isRunning).toBe(false)
+            done()
+        })
 
-    task.onComplete((_task) => {
-        expect(_task).toBe(task)
-        expect(_task.isCompleted).toBe(true)
-        expect(_task.result).toBe(3)
-        expect(_task.error).toBe(null)
-        expect(_task.time).toBeGreaterThanOrEqual(1000)
-        expect(_task.isRunning).toBe(false)
-        done()
+        expect(task.isCompleted).toBe(false)
+        expect(task.isRunning).toBe(false)
+
+        task.run()
+
+        expect(task.isRunning).toBe(true)
+
     })
 
-    expect(task.isCompleted).toBe(false)
-    expect(task.isRunning).toBe(false)
 
-    task.run()
+    test('error', (done) => {
 
-    expect(task.isRunning).toBe(true)
+        const task = new Task(taskDataList[1] as any)
 
-})
+        task.onComplete((_task) => {
+            expect(_task).toBe(task)
+            expect(_task.isCompleted).toBe(true)
+            expect(_task.result).toBe(null)
+            expect(_task.error).not.toBe(null)
+            expect(_task.error?.message).toBe("测试异常")
+            expect(_task.time).toBeGreaterThanOrEqual(1000)
+            expect(_task.isRunning).toBe(false)
+            done()
+        })
+
+        expect(task.isCompleted).toBe(false)
+        expect(task.isRunning).toBe(false)
+
+        task.run()
+
+        expect(task.isRunning).toBe(true)
+
+    }, 1000 * 10)
 
 
-test('Task.error', (done) => {
+    test('types', async () => {
 
-    const task = new Task(taskDataList[1] as any)
+        const task = new Task<[number, number], number>({
+            id: 201,
+            tag: 'power',
+            params: [2, 10],
+            taskFunction: async (a: number, b: number): Promise<number> => {
+                return a ** b
+            }
+        })
 
-    task.onComplete((_task) => {
-        expect(_task).toBe(task)
-        expect(_task.isCompleted).toBe(true)
-        expect(_task.result).toBe(null)
-        expect(_task.error).not.toBe(null)
-        expect(_task.error?.message).toBe("测试异常")
-        expect(_task.time).toBeGreaterThanOrEqual(1000)
-        expect(_task.isRunning).toBe(false)
-        done()
+        await task.run()
+        expect(task.id).toBe(201)
+        expect(task.tag).toBe('power')
+        expect(task.result).toBe(1024)
+        expect(task.time).toBeGreaterThanOrEqual(0)
+        expect(task.isCompleted).toBe(true)
+        expect(task.error).toBe(null)
+
     })
 
-    expect(task.isCompleted).toBe(false)
-    expect(task.isRunning).toBe(false)
-
-    task.run()
-
-    expect(task.isRunning).toBe(true)
-
-}, 1000 * 10)
+});
 
 
-test('Task.types', async () => {
-
-    const task = new Task<[number, number], number>({
-        id: 201,
-        tag: 'power',
-        params: [2, 10],
-        taskFunction: async (a: number, b: number): Promise<number> => {
-            return a ** b
-        }
-    })
-
-    await task.run()
-    expect(task.id).toBe(201)
-    expect(task.tag).toBe('power')
-    expect(task.result).toBe(1024)
-    expect(task.time).toBeGreaterThanOrEqual(0)
-    expect(task.isCompleted).toBe(true)
-    expect(task.error).toBe(null)
-
-})
